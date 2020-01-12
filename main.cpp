@@ -167,9 +167,6 @@ int main() {
     }
     int ans = x.longest_sub(u);
     (ans==-1)?cout<<"INF":cout<<ans;
-    TEST(basic_check, test_eq){
-        EXPECT_EQ(1,0);
-    }
     return 0;
 
  }
