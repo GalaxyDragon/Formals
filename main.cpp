@@ -1,8 +1,8 @@
 #include <iostream>
 #include <stack>
 #include <string>
-#include "gtest/gtest.h"
 #include <deque>
+#include <assert.h>
 using std::string;
 using std::stack;
 using std::cin;
@@ -84,11 +84,11 @@ class ConcNode: public Node {
 };
 class Regexp{
  public:
-    Regexp(string& s){
+    Regexp(string s){
         int cnt = 0;
         for(char c:s){
             if(c=='a'||c=='b'||c=='c'){
-               cnt++;
+                cnt++;
             }
             if(c=='.' || c=='+'){
                 cnt--;
@@ -146,7 +146,7 @@ class Regexp{
                 if(initial_node->string_in(s1)) {
                     ans = std::max(ans, j);
                 }
-                }
+            }
         }
         return ans;
     }
@@ -155,18 +155,17 @@ class Regexp{
     Node* initial_node= nullptr;
 
 };
-int main() {
-    string s;
-    cin>>s;
-    Regexp x(s);
-    string u;
-    cin>>u;
-    if(!x.is_correct()){
-        cout<<"ERROR";
-        return 0;
+int Longest_substring(string s, Regexp checker){
+    //-2 - неверный regexp
+    //-1 - нет такой подстроки
+    if(!checker.is_correct()){
+        return -2;
     }
-    int ans = x.longest_sub(u);
-    (ans==-1)?cout<<"INF":cout<<ans;
+    return checker.longest_sub(s);
+}
+int main() {
+    assert(Longest_substring("babc",Regexp("ab+c.aba.∗.bac.+.+∗"))==2);
+    assert(Longest_substring("abbaa",Regexp("acb..bab.c.*.ab.ba.+.+*a."))==4);
+    assert(Longest_substring("asd",Regexp("ab+a+abc"))==-2);
     return 0;
-
- }
+}
